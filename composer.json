@@ -1,6 +1,6 @@
 {
-    "name": "newerton/yii-booster",
-    "description": "Widget toolkit for Yii framework",
+    "name": "newerton/yii-booster-with-bs3",
+    "description": "Widget toolkit with Bootstrap 3 for Yii framework",
     "type": "library",
     "license": "MIT",
     "keywords": ["yii", "bootstrap"],
