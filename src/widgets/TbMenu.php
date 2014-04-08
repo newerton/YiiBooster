@@ -1,12 +1,12 @@
 <?php
+
 /**
- *## TbMenu class file.
+ * ## TbMenu class file.
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2012-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  */
-
 Yii::import('bootstrap.widgets.TbBaseMenu');
 
 /**
@@ -16,108 +16,105 @@ Yii::import('bootstrap.widgets.TbBaseMenu');
  *
  * @package booster.widgets.navigation
  */
-class TbMenu extends TbBaseMenu
-{
-	// Menu types.
-	const TYPE_TABS = 'tabs';
-	const TYPE_PILLS = 'pills';
-	const TYPE_LIST = 'list';
+class TbMenu extends TbBaseMenu {
 
-	/**
-	 * @var string the menu type.
-	 *
-	 * Valid values are 'tabs', 'pills', or 'list'.
-	 */
-	public $type;
+    // Menu types.
+    const TYPE_TABS = 'nav-tabs';
+    const TYPE_PILLS = 'nav-pills';
+    const TYPE_STACKED = 'nav-stacked';
 
-	/**
-	 * @var string|array the scrollspy target or configuration.
-	 */
-	public $scrollspy;
+    /**
+     * @var string the menu type.
+     *
+     * Valid values are 'tabs', 'pills', or 'list'.
+     */
+    public $type;
 
-	/**
-	 * @var boolean indicates whether the menu should appear vertically stacked.
-	 */
-	public $stacked = false;
+    /**
+     * @var string|array the scrollspy target or configuration.
+     */
+    public $scrollspy;
 
-	/**
-	 * @var boolean indicates whether dropdowns should be dropups instead.
-	 */
-	public $dropup = false;
+    /**
+     * @var boolean indicates whether the menu should appear vertically stacked.
+     */
+    public $stacked = false;
 
-	/**
-	 *### .init()
-	 *
-	 * Initializes the widget.
-	 */
-	public function init()
-	{
-		parent::init();
+    /**
+     * @var boolean indicates whether dropdowns should be dropups instead.
+     */
+    public $dropup = false;
 
-		$classes = array('nav');
+    /**
+     * ### .init()
+     *
+     * Initializes the widget.
+     */
+    public function init() {
+        parent::init();
 
-		$validTypes = array(self::TYPE_TABS, self::TYPE_PILLS, self::TYPE_LIST);
+        $classes = array('nav navbar-nav');
 
-		if (isset($this->type) && in_array($this->type, $validTypes)) {
-			$classes[] = 'nav-' . $this->type;
-		}
+        $validTypes = array(self::TYPE_TABS, self::TYPE_PILLS, self::TYPE_STACKED);
 
-		if ($this->stacked && $this->type !== self::TYPE_LIST) {
-			$classes[] = 'nav-stacked';
-		}
+        if (isset($this->type) && in_array($this->type, $validTypes)) {
+            $classes[] = 'nav-' . $this->type;
+        }
 
-		if ($this->dropup === true) {
-			$classes[] = 'dropup';
-		}
+        if ($this->stacked && $this->type !== self::TYPE_STACKED) {
+            $classes[] = 'nav-stacked';
+        }
 
-		if (isset($this->scrollspy)) {
-			$scrollspy = is_string($this->scrollspy) ? array('target' => $this->scrollspy) : $this->scrollspy;
-			$this->widget('bootstrap.widgets.TbScrollSpy', $scrollspy);
-		}
+        if ($this->dropup === true) {
+            $classes[] = 'dropup';
+        }
 
-		if (!empty($classes)) {
-			$classes = implode(' ', $classes);
-			if (isset($this->htmlOptions['class'])) {
-				$this->htmlOptions['class'] .= ' ' . $classes;
-			} else {
-				$this->htmlOptions['class'] = $classes;
-			}
-		}
-	}
+        if (isset($this->scrollspy)) {
+            $scrollspy = is_string($this->scrollspy) ? array('target' => $this->scrollspy) : $this->scrollspy;
+            $this->widget('bootstrap.widgets.TbScrollSpy', $scrollspy);
+        }
 
-	/**
-	 *### .getDividerCssClass()
-	 *
-	 * Returns the divider css class.
-	 *
-	 * @return string the class name
-	 */
-	public function getDividerCssClass()
-	{
-		return (isset($this->type) && $this->type === self::TYPE_LIST) ? 'divider' : 'divider-vertical';
-	}
+        if (!empty($classes)) {
+            $classes = implode(' ', $classes);
+            if (isset($this->htmlOptions['class'])) {
+                $this->htmlOptions['class'] .= ' ' . $classes;
+            } else {
+                $this->htmlOptions['class'] = $classes;
+            }
+        }
+    }
 
-	/**
-	 *### .getDropdownCssClass()
-	 *
-	 * Returns the dropdown css class.
-	 *
-	 * @return string the class name
-	 */
-	public function getDropdownCssClass()
-	{
-		return 'dropdown';
-	}
+    /**
+     * ### .getDividerCssClass()
+     *
+     * Returns the divider css class.
+     *
+     * @return string the class name
+     */
+    public function getDividerCssClass() {
+        return (isset($this->type) && $this->type === self::TYPE_STACKED) ? 'divider' : 'divider-vertical';
+    }
 
-	/**
-	 *### .isVertical()
-	 *
-	 * Returns whether this is a vertical menu.
-	 *
-	 * @return boolean the result
-	 */
-	public function isVertical()
-	{
-		return isset($this->type) && $this->type === self::TYPE_LIST;
-	}
+    /**
+     * ### .getDropdownCssClass()
+     *
+     * Returns the dropdown css class.
+     *
+     * @return string the class name
+     */
+    public function getDropdownCssClass() {
+        return 'dropdown';
+    }
+
+    /**
+     * ### .isVertical()
+     *
+     * Returns whether this is a vertical menu.
+     *
+     * @return boolean the result
+     */
+    public function isVertical() {
+        return isset($this->type) && $this->type === self::TYPE_STACKED;
+    }
+
 }
